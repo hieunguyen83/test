@@ -4,7 +4,7 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = 'ffdddddd34lkdf088882sxxc'
+app.secret_key = 'ffdddddd34lkdf0882sxxc'
 
 @app.route("/")
 def home():
