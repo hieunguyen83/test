@@ -1,0 +1,12 @@
+This is home.
+
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
+<form action="your_url" method="post">
+    <label>Your URL: </label><br>
+    <input type="url" name="url" value=""><br>
+    <label>Your Code: </label><br>
+    <input type="text" name="code" value=""><br>
+    <input type="submit" name="Submit">
+</form>
