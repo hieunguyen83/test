@@ -1,8 +1,17 @@
-This is home.
+{% extends "base.html" %}
+
+{% block title %}Home page: URL Shorterner {% endblock %}
+
+{% block main %}
 
 {% for message in get_flashed_messages() %}
 {{ message }}
 {% endfor %}
+
+<div class="text-center mt-5">
+    <h1>Create A Short Code For Your URL</h1></div>
+
+<div class="container">
 <form action="your_url" method="post">
     <label>Your URL: </label><br>
     <input type="url" name="url" value=""><br>
@@ -10,8 +19,9 @@ This is home.
     <input type="text" name="code" value=""><br>
     <input type="submit" name="Submit">
 </form>
+</div>
 
-
+<div class="container">
 <form action="your_url" method="post" enctype="multipart/form-data">
     <label>Your File: </label><br>
     <input type="file" name="file" value=""><br>
@@ -19,12 +29,19 @@ This is home.
     <input type="text" name="code" value=""><br>
     <input type="submit" name="Submit">
 </form>
+</div>
+
 
 {% if codes %}
 Your Code:
-<ul>
+<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 {% for code in codes %}
-<li><a href="{{url_for('your_code',code=code)}}">{{ code }}</li></a>
+<li class="nav-item">
+<a class="nav-link active" aria-current="page" href="{{url_for('your_code',code=code)}}">{{ code }}</a>
+
+</li>
 {% endfor %}
 </ul>
 {% endif %}
+
+{% endblock %}
