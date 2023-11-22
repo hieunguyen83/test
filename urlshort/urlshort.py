@@ -1,23 +1,22 @@
-from flask import abort, Flask, flash, jsonify, render_template, request, redirect, session, url_for
+from flask import abort, Blueprint, flash, jsonify, render_template, request, redirect, session, url_for
 from werkzeug.utils import secure_filename
 import json
 import os
 
 
-app = Flask(__name__)
-app.secret_key = 'ffdddddd34lkdf0882sxxc'
+bp = Blueprint('urlshort',__name__)
 
-@app.route("/")
+@bp.route("/")
 def home():
     return render_template("home.html", codes=session.keys())
 
 
-@app.route("/about")
+@bp.route("/about")
 def about():
     pass
 
 
-@app.route("/your_url", methods=['GET','POST'])
+@bp.route("/your_url", methods=['GET','POST'])
 def your_url():
     if request.method == 'POST':
         urls = {}
@@ -26,14 +25,14 @@ def your_url():
                 urls = json.load(f)
         if request.form['code'] in urls.keys():
             flash('Code is existed!')
-            return redirect(url_for('home'))
+            return redirect(url_for('urlshort.home'))
         
         if 'url' in request.form.keys():
             urls[request.form['code']] = {'url':request.form['url']}
         else:
             f = request.files['file']
             full_name = request.form['code'] + secure_filename(f.filename)
-            f.save('C:\\Users\\Gia Hieu\\Desktop\\hocflask\\static\\user_files\\'+full_name)
+            f.save('C:\\Users\\Gia Hieu\\Desktop\\hocflask\\urlshort\\static\\user_files\\'+full_name)
             urls[request.form['code']] = {'file':full_name}
 
         with open('urls.json','w') as f:
@@ -41,9 +40,9 @@ def your_url():
             json.dump(urls, f)
         return render_template('your_url.html', code=request.form['code'])
     else:
-        return redirect(url_for('home'))
+        return redirect(url_for('urlshort.home'))
 
-@app.route("/<string:code>")
+@bp.route("/<string:code>")
 def your_code(code):
     urls = {}
     if os.path.exists('urls.json'):
@@ -58,11 +57,11 @@ def your_code(code):
 
     return abort(404)
 
-@app.errorhandler(404)
+@bp.errorhandler(404)
 def page_not_found(error):
     return render_template("page_not_found.html"),404
 
 
-@app.route("/api")
+@bp.route("/api")
 def api():
     return jsonify(list(session.keys()))

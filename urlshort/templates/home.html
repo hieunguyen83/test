@@ -37,7 +37,7 @@ Your Code:
 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 {% for code in codes %}
 <li class="nav-item">
-<a class="nav-link active" aria-current="page" href="{{url_for('your_code',code=code)}}">{{ code }}</a>
+<a class="nav-link active" aria-current="page" href="{{url_for('urlshort.your_code',code=code)}}">{{ code }}</a>
 
 </li>
 {% endfor %}
