@@ -10,3 +10,21 @@ This is home.
     <input type="text" name="code" value=""><br>
     <input type="submit" name="Submit">
 </form>
+
+
+<form action="your_url" method="post" enctype="multipart/form-data">
+    <label>Your File: </label><br>
+    <input type="file" name="file" value=""><br>
+    <label>Your Code: </label><br>
+    <input type="text" name="code" value=""><br>
+    <input type="submit" name="Submit">
+</form>
+
+{% if codes %}
+Your Code:
+<ul>
+{% for code in codes %}
+<li><a href="{{url_for('your_code',code=code)}}">{{ code }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
